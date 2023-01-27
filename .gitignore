@@ -23,8 +23,11 @@
 hs_err_pid*
 
 #environment variables
-api/vendor/
-api/.env
+.env
+application.properties
 
 #keys
 *.pem
+
+#IntelliJ
+.idea
