@@ -1,5 +1,6 @@
-package com.tiptracker.api.user;
+package com.tiptracker.api.job;
 
+import com.tiptracker.api.user.User;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;

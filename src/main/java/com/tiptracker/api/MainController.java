@@ -1,5 +1,9 @@
-package com.tiptracker.api.user;
+package com.tiptracker.api;
 
+import com.tiptracker.api.job.JobRepository;
+import com.tiptracker.api.shift.ShiftRepository;
+import com.tiptracker.api.user.User;
+import com.tiptracker.api.user.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,11 +15,17 @@ import java.util.regex.Pattern;
 import static java.lang.String.valueOf;
 
 @RestController
-@RequestMapping(path = "/api/user")
-public class UserController {
+@RequestMapping(path = "/user")
+public class MainController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JobRepository jobRepository;
+
+    @Autowired
+    private ShiftRepository shiftRepository;
 
     @PostMapping(path = "/register", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String register(@RequestParam String apiVersion,

@@ -2,6 +2,7 @@ package com.tiptracker.api.user;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.tiptracker.api.job.Job;
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
