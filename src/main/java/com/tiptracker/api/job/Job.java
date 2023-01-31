@@ -2,43 +2,28 @@ package com.tiptracker.api.job;
 
 import com.tiptracker.api.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Entity
+@Getter
+@Setter
 public class Job {
 
+    // primary key
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private BigInteger id;
+    private BigInteger jobId;
+
+    // foreign key
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
+    private User user;
 
     private String jobTitle;
     private BigDecimal payRate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public BigDecimal getPayRate() {
-        return payRate;
-    }
-
-    public void setPayRate(BigDecimal payRate) {
-        this.payRate = payRate;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
