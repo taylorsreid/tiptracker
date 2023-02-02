@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 // CRUD refers Create, Read, Update, Delete
 
 @Repository
-public interface JobRepository extends CrudRepository<Job, Integer> {
+public interface JobRepository extends CrudRepository<JobModel, Integer> {
 
 }
