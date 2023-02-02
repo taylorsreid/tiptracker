@@ -1,5 +1,6 @@
 package com.tiptracker.api.shift;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tiptracker.api.user.User;
 import jakarta.persistence.*;
@@ -38,6 +39,8 @@ public class Shift {
     private User user;
 
     private String jobTitle;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date shiftDate;
     private Double hoursWorked;
     private Double hourlyRate;

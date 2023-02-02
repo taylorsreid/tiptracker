@@ -1,6 +1,5 @@
 package com.tiptracker.api.shift;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.tiptracker.api.user.User;
@@ -52,19 +51,9 @@ public class ShiftService {
                             getShiftRequest.getEndDate()
                     );
 
-            StringBuffer shiftsAsStringBuffer = new StringBuffer();
-
-            shifts.forEach(shift -> {
-                try {
-                    shiftsAsStringBuffer.append(ow.writeValueAsString(shift)).append(",");
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
             return new ResponseEntity<>(
                     "{\"success\": \"true\"," +
-                            "\"message\":" + shiftsAsStringBuffer + "}",
+                            "\"message\":" + ow.writeValueAsString(shifts) + "}",
                     HttpStatus.OK);
         }
         catch (Exception e){
