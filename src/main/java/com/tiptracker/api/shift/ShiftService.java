@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,8 +18,6 @@ public class ShiftService {
     ShiftRepository shiftRepository;
     @Autowired
     private UserRepository userRepository;
-
-    ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
     @ResponseBody
     public ResponseEntity<String> createShifts(String userId, List<PostShiftRequest> shiftRequestList){
@@ -43,24 +40,32 @@ public class ShiftService {
     }
 
     public ResponseEntity<String> getShifts(String userId, GetShiftRequest getShiftRequest) {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         try{
-            ArrayList<Shift> shifts = shiftRepository
+            List<Shift> shifts = shiftRepository
                     .findByUser_UserIdAndUser_Shifts_ShiftDateGreaterThanEqualAndUser_Shifts_ShiftDateLessThanEqual(
                             userId,
                             getShiftRequest.getStartDate(),
                             getShiftRequest.getEndDate()
                     );
-
-            return new ResponseEntity<>(
-                    "{\"success\": \"true\"," +
-                            "\"message\":" + ow.writeValueAsString(shifts) + "}",
-                    HttpStatus.OK);
+            if (shifts.isEmpty()){
+                return new ResponseEntity<>(
+                        "{\"success\": \"false\"," +
+                                "\"message\": \"Nothing found.\"}",
+                        HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>(
+                        "{\"success\": \"true\"," +
+                                "\"message\":" + ow.writeValueAsString(shifts) + "}",
+                        HttpStatus.OK);
+            }
         }
         catch (Exception e){
             return new ResponseEntity<>(
                     "{\"success\": \"false\"," +
-                            "\"message\": \"Nothing found.\"}",
-                    HttpStatus.NO_CONTENT);
+                            "\"message\": \"Internal server error.\"}",
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

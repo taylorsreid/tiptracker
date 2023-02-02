@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.List;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete
@@ -15,6 +15,6 @@ public interface ShiftRepository extends CrudRepository<Shift, Integer> {
     @Query("""
             select s from Shift s inner join s.user.shifts shifts
             where s.user.userId = ?1 and shifts.shiftDate >= ?2 and shifts.shiftDate <= ?3""")
-    ArrayList<Shift> findByUser_UserIdAndUser_Shifts_ShiftDateGreaterThanEqualAndUser_Shifts_ShiftDateLessThanEqual(String userId, Date shiftDate, Date shiftDate1);
+    List<Shift> findByUser_UserIdAndUser_Shifts_ShiftDateGreaterThanEqualAndUser_Shifts_ShiftDateLessThanEqual(String userId, Date shiftDate, Date shiftDate1);
     
 }
