@@ -1,15 +1,16 @@
 package com.tiptracker.api.shift;
 
 import lombok.Getter;
-import java.sql.Date;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 public class PostShiftRequest {
 
-    private Date shiftDate;
+    private LocalDate shiftDate;
     private String jobTitle;
-    private Double hoursWorked;
-    private Double hourlyRate;
-    private Double tipsEarned;
+    private BigDecimal hoursWorked;
+    private BigDecimal hourlyRate;
+    private BigDecimal tipsEarned;
 
 }

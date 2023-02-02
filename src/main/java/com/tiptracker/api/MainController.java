@@ -43,10 +43,7 @@ public class MainController {
             return shiftService.createShifts(userId, shiftRequestList);
         }
         else{
-            return new ResponseEntity<>(
-                    "\"success\": \"false\"," +
-                            "\"message\": \"BAD TOKEN\"",
-                    HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(GenericResponse.get(false, "BAD TOKEN"), HttpStatus.UNAUTHORIZED);
         }
     }
     @GetMapping(path = "/shift", consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,10 +53,7 @@ public class MainController {
             return shiftService.getShifts(userId, getShiftRequest);
         }
         else{
-            return new ResponseEntity<>(
-                    "\"success\": \"false\"," +
-                            "\"message\": \"BAD TOKEN\"",
-                    HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(GenericResponse.get(false, "BAD TOKEN"), HttpStatus.UNAUTHORIZED);
         }
     }
 

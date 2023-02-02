@@ -5,27 +5,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tiptracker.api.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class Shift {
-
-    public Shift(User user, PostShiftRequest postShiftRequest){
-        this.user = user;
-        this.jobTitle = postShiftRequest.getJobTitle();
-        this.shiftDate = postShiftRequest.getShiftDate();
-        this.hoursWorked = postShiftRequest.getHoursWorked();
-        this.hourlyRate = postShiftRequest.getHourlyRate();
-        this.tipsEarned = postShiftRequest.getTipsEarned();
-
-    }
 
     @JsonIgnore
     @Id
@@ -41,9 +30,9 @@ public class Shift {
     private String jobTitle;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date shiftDate;
-    private Double hoursWorked;
-    private Double hourlyRate;
-    private Double tipsEarned;
+    private LocalDate shiftDate;
+    private BigDecimal hoursWorked;
+    private BigDecimal hourlyRate;
+    private BigDecimal tipsEarned;
 
 }

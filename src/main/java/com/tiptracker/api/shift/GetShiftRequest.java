@@ -1,12 +1,12 @@
 package com.tiptracker.api.shift;
 
 import lombok.Getter;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 public class GetShiftRequest {
 
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
 }
