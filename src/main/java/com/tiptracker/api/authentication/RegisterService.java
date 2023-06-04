@@ -1,8 +1,10 @@
 package com.tiptracker.api.authentication;
 
+import com.tiptracker.api.GenericResponse;
 import com.tiptracker.api.user.User;
 import com.tiptracker.api.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.regex.Matcher;
@@ -14,10 +16,11 @@ public class RegisterService {
     @Autowired
     private UserRepository userRepository;
 
-    public RegisterResponse register(RegisterRequest registerRequest){
+    public ResponseEntity<String> register(RegisterRequest registerRequest){
 
         //create new blank response
-        RegisterResponse registerResponse = new RegisterResponse();
+//        RegisterResponse registerResponse = new RegisterResponse();
+//        GenericResponse registerResponse = new GenericResponse();
 
         //check that email doesn't already exist
         boolean availableEmail = !userRepository.existsByEmailAllIgnoreCase(registerRequest.getEmail());
@@ -31,17 +34,6 @@ public class RegisterService {
         Pattern passwordPattern = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
         Matcher passwordMatcher = passwordPattern.matcher(registerRequest.getPassword());
         boolean validPassword = passwordMatcher.find();
-
-        //set statuses for response
-        if (availableEmail){
-            registerResponse.setAvailableEmail(true);
-        }
-        if (validEmail){
-            registerResponse.setValidEmail(true);
-        }
-        if (validPassword){
-            registerResponse.setValidPassword(true);
-        }
 
         //if password meets requirements and email isn't taken
         if (availableEmail && validEmail && validPassword) {
@@ -65,16 +57,21 @@ public class RegisterService {
             //save to db
             userRepository.save(newUser);
 
-            registerResponse.setMessage("Account created successfully.");
+            //registerResponse.setMessage("Account created successfully.");
 
-            //will only return when all 3 booleans are true and account has been created
-            return registerResponse;
+            //will only return when all 3 booleans are true and account has been created\
+            return ResponseEntity.ok(new GenericResponse(true, "Account created successfully.").toString());
 
         }
 
         //set failure message and return reasons why
-        registerResponse.setMessage("Account creation failed.");
-        return registerResponse;
+        GenericResponse genericResponse = new GenericResponse();
+        genericResponse.setSuccess(false);
+        genericResponse.appendBody("Email available: " + availableEmail);
+        genericResponse.appendBody(" | Valid email: " + validEmail);
+        genericResponse.appendBody(" | Valid password: " + validPassword);
+
+        return ResponseEntity.badRequest().body(genericResponse.toString());
 
     }
 

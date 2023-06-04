@@ -4,31 +4,51 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.tiptracker.api.shift.Shift;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
+@NoArgsConstructor
 @ResponseBody
 public class GenericResponse {
 
-    //for getting string messages
-   public static String get(boolean success, String message){
-       return "{\"success\": \"" + success + "\"," +
-               "\"message\": \"" + message + "\"}";
-   }
+    @Setter
+    private boolean success;
+    private StringBuffer stringBufferBody = new StringBuffer();
+    private List<Shift> shiftBody;
 
-    //for getting list of shift messages
-    public static String get(boolean success, List<Shift> list) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        return "{\"success\":" + success + "," +
-                "\"message\":" + mapper.writeValueAsString(list) + "}";
+    public GenericResponse(boolean success, String stringBody){
+        this.success = success;
+        stringBufferBody.append(stringBody);
     }
 
-//   //for getting list messages
-//    public static String get(boolean success, List<?> list) throws JsonProcessingException {
-//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-//        return "{\"success\":" + success + "," +
-//                "\"message\":" + ow.writeValueAsString(list) + "}";
-//    }
+    public GenericResponse(boolean success, List<Shift> shiftBody){
+        this.success = success;
+        this.shiftBody = shiftBody;
+    }
+
+    public void appendBody(String newMessage){
+        stringBufferBody.append(newMessage);
+    }
+
+    @Override
+    public String toString() {
+       if(shiftBody != null){
+           ObjectMapper mapper = new ObjectMapper();
+           mapper.registerModule(new JavaTimeModule());
+           try {
+               return "{\"success\":" + success + "," +
+                       "\"body\":" + mapper.writeValueAsString(shiftBody) + "}";
+           } catch (JsonProcessingException e) {
+               return "{\"success\":" + success + "," +
+                       "\"body\": \" 500 INTERNAL SERVER ERROR \"}";
+           }
+       }
+       else {
+           return "{\"success\":" + success + "," +
+                   "\"body\": \"" + stringBufferBody + "\"}";
+       }
+    }
 
 }

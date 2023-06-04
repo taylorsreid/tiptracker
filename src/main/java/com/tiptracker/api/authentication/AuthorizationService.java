@@ -13,10 +13,11 @@ public class AuthorizationService {
 
     //token configuration
     private final String ISSUER = "tiptracker"; //issuer name
-    private final String ENV_VAR = "HMAC256"; //name of secret key stored in system environment variables
+//    private final String ENV_VAR = "HMAC256"; //name of secret key stored in system environment variables
 
     //algorithm and verifier
-    private final Algorithm algorithm = Algorithm.HMAC256(System.getenv(ENV_VAR));
+//    private final Algorithm algorithm = Algorithm.HMAC256(System.getenv(ENV_VAR));
+    private final Algorithm algorithm = Algorithm.HMAC256("test");
     private final JWTVerifier verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
 
     /**

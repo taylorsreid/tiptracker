@@ -25,6 +25,7 @@ hs_err_pid*
 #environment variables
 .env
 application.properties
+application.yml
 
 #keys
 *.pem
