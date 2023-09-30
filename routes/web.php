@@ -20,5 +20,6 @@ Route::get('/', function () {
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'read');
-    
+    Route::patch('/user', 'update');
+    Route::delete('/user', 'delete');
 });

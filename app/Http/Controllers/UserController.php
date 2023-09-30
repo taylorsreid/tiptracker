@@ -18,7 +18,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(StoreUserRequest $request)
+    // public function create(Request $request)
     // {
     //     // controlled by app\Actions\Fortify\CreateNewUser
     // }
@@ -34,16 +34,21 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
-        //
+        if ($request->isJson()) {
+            $request->user()->update($request->json()->all());
+        }
+        else {
+            $request->user()->update($request->all());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(User $user)
+    public function delete(Request $request)
     {
-        //
+        User::destroy($request->user()->id);
     }
 }
