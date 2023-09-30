@@ -16,8 +16,11 @@ class JobFactory extends Factory
      */
     public function definition(): array
     {
+        $defaultHourlyRate = fake()->numberBetween(8, 100);
         return [
-            //
+            'title' => fake()->jobTitle(),
+            'default_hourly_rate' => $defaultHourlyRate,
+            'default_overtime_rate' => $defaultHourlyRate * 1.5,
         ];
     }
 }

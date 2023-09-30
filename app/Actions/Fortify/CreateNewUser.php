@@ -22,7 +22,7 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'default_job' => ['nullable', 'string', 'max:255'],
+            'job_id' => ['nullable', 'string', 'max:255'],
             'phone_number' => ['nullable', 'string', 'max:255'],
             'email' => [
                 'required',
@@ -37,7 +37,7 @@ class CreateNewUser implements CreatesNewUsers
         return User::create([
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
-            'default_job' => $input['default_job'] ?? null, //null coalesce
+            'job_id' => $input['default_job'] ?? null, //null coalesce
             'phone_number' => $input['phone_number'] ?? null,
             'email' => $input['email'],
             'password' => Hash::make($input['password']),

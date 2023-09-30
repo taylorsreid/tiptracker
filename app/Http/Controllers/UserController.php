@@ -2,40 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+    // public function index()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserRequest $request)
-    {
-        // controlled by app\Actions\Fortify\CreateNewUser
-    }
+    // public function store(StoreUserRequest $request)
+    // {
+    //     // controlled by app\Actions\Fortify\CreateNewUser
+    // }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function read(Request $request)
     {
-        //
+        return $request->user();
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -43,7 +42,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function delete(User $user)
     {
         //
     }
