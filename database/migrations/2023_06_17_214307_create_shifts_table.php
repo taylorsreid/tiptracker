@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('shifts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedDecimal('hours_worked_regular');
-            $table->unsignedDecimal('hour_worked_overtime');
-            $table->unsignedDecimal('hourly_rate_regular'); // this will create data that duplicates data in the job model, but we need to be able to account for raises
-            $table->unsignedDecimal('hourly_rate_overtime'); // same
-            $table->unsignedDecimal('tips_cash');
-            $table->unsignedDecimal('tips_charge');
+            $table->date('date');
+            $table->unsignedDecimal('hours_worked_regular')->nullable();
+            $table->unsignedDecimal('hour_worked_overtime')->nullable();
+            $table->unsignedDecimal('hourly_rate_regular')->nullable(); // this will create data that duplicates data in the job model, but we need to be able to account for raises
+            $table->unsignedDecimal('hourly_rate_overtime')->nullable(); // same
+            $table->unsignedDecimal('tips_cash')->nullable();
+            $table->unsignedDecimal('tips_charge')->nullable();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Job::class)->constrained()->cascadeOnDelete();
             $table->timestamps();

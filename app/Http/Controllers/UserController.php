@@ -28,7 +28,7 @@ class UserController extends Controller
      */
     public function read(Request $request)
     {
-        return $request->user();
+        return $request->user()->with('jobs')->get();
     }
 
     /**

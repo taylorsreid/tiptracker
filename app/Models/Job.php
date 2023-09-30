@@ -20,4 +20,13 @@ class Job extends Model
         'default_overtime_rate'
     ];
 
+    protected $casts = [
+        'default_hourly_rate' => 'double', // decimal:2 doesn't work for some reason
+        'default_overtime_rate' => 'double'
+    ];
+
+    protected $hidden = [
+        'user_id'
+    ];
+
 }
