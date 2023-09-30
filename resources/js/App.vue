@@ -1,5 +1,6 @@
 <template>
-    <h1>
-        How To Install Vue 3 in Laravel 10 : ZWebCourses :)
-    </h1>
+    <h1>Tip Tracker</h1>
 </template>
+<script>
+alert('script test')
+</script>
