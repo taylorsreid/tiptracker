@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('app');
+});
+
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'read');
     Route::patch('/user', 'update');
