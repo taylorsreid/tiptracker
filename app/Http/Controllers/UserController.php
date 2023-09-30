@@ -36,12 +36,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        if ($request->isJson()) {
-            $request->user()->update($request->json()->all());
-        }
-        else {
-            $request->user()->update($request->all());
-        }
+        $request->user()->update($request->all());
     }
 
     /**
@@ -49,6 +44,6 @@ class UserController extends Controller
      */
     public function delete(Request $request)
     {
-        User::destroy($request->user()->id);
+        $request->user()->delete();
     }
 }
