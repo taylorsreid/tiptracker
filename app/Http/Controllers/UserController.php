@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('auth:sanctum');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +33,7 @@ class UserController extends Controller
      */
     public function read(Request $request)
     {
-        return $request->user()->with('jobs')->get();
+        return $request->user()->with('jobs')->firstOrFail();
     }
 
     /**
