@@ -1,31 +1,36 @@
 <template>
+
     <h1>Tip Tracker</h1>
 
     <label for="email">email</label>
     <input type="text" v-model="email">
-    
+
     <br>
-    
+
     <label for="password">password</label>
     <input type="password" v-model="password">
-    
+
     <br>
 
     <label for="remember">Remember</label>
     <input type="checkbox" id="remember" v-model="remember" />
-    
+
     <br>
 
     <button type="submit" @click="login">Login</button>
     <br>
     <button @click="logout">Logout</button>
+
+    
 </template>
 <script setup>
 
     import axios from 'axios';
     import Cookies from "js-cookie";
-    import { ref } from 'vue'    
+    import { ref } from 'vue'   
+    import { useRouter } from 'vue-router' 
 
+    const router = useRouter();
     const email = ref('');
     const password = ref('');
     const remember = ref(false);
@@ -41,6 +46,7 @@
             .then(() => {
                 axios.get('/user').then((response) => { // call user endpoint
                     sessionStorage.setItem('user', JSON.stringify(response.data));
+                    router.push('/home');
                 })
                 .catch((error) => {
 
