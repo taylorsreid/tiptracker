@@ -17,24 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return redirect('/web');
-// });
-
-// Route::get('/web/{any?}', function () { 
-//     return view('app'); 
-// })->where('any', '.*');
-
-// only for testing
-Route::any('/test', function (Request $request) {
-    if (config('app.debug')) {
-        return response($request);
-    }
-    else {
-        abort(404);
-    }
-});
-
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'read');
     Route::patch('/user', 'update');
