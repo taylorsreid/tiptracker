@@ -3,14 +3,15 @@ import { createRouter, createWebHistory } from 'vue-router'
 export default createRouter({
   history: createWebHistory(),
   routes: [
-
     {
-      path: '/login',
-      component: () => import('./Login.vue'),
+      path: '/web',
+      name: 'home',
+      component: () => import('./HomeView.vue')
     },
     {
-      path: '/home',
-      component: () => import('./Home.vue'),
+      path: '/web/login',
+      name: 'login',
+      component: () => import('./LoginView.vue')
     }
   ],
 })

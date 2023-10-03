@@ -2,13 +2,13 @@
 
     <h1>Tip Tracker</h1>
 
-    <label for="email">email</label>
-    <input type="text" v-model="email">
+    <!-- <label for="email">email</label> -->
+    <input type="email" v-model="email" placeholder="Email" required>
 
     <br>
 
-    <label for="password">password</label>
-    <input type="password" v-model="password">
+    <!-- <label for="password">password</label> -->
+    <input type="password" v-model="password" placeholder="Password" required>
 
     <br>
 
@@ -46,7 +46,7 @@
             .then(() => {
                 axios.get('/user').then((response) => { // call user endpoint
                     sessionStorage.setItem('user', JSON.stringify(response.data));
-                    router.push('/home');
+                    // router.push('/home');
                 })
                 .catch((error) => {
 
@@ -61,6 +61,7 @@
     function logout() {
         axios.post('/auth/logout').then(() => {
             Cookies.remove('XSRF-TOKEN');
+            sessionStorage.clear();
         })
     }
 
