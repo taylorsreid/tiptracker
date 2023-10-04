@@ -8,7 +8,7 @@ use App\Models\Job;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class DevSeeder extends Seeder
+class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
