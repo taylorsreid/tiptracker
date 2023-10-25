@@ -3,11 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Tip Tracker</title>
-        @vite('resources/css/app.css')
+        <title></title>
     </head>
     <body>
-        <div id="app"></div>
-        @vite('resources/js/app.ts')
+        <p>If you're seeing this then something went wrong.</p>
     </body>
 </html>

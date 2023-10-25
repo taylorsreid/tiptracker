@@ -17,14 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/web');
-});
-
-Route::get('/web/{any?}', function () { 
-    return view('app'); 
-})->where('any', '.*');
-
 // only for testing
 Route::any('/test', function (Request $request) {
     if (config('app.debug')) {
