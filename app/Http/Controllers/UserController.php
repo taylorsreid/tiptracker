@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function read(Request $request)
     {
-        return $request->user()->with('jobs')->firstOrFail();
+        return $request->user()->where('id', $request->user()->id)->with('jobs')->firstOrFail();
     }
 
     /**
