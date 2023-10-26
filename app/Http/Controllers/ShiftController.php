@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use App\Models\Shift;
+use Illuminate\Database\RecordsNotFoundException;
 use Illuminate\Http\Request;
 
 class ShiftController extends Controller
@@ -17,12 +19,17 @@ class ShiftController extends Controller
      */
     public function create(Request $request)
     {
+        $this->authorize('create', Shift::class);
+
+        // check that the user isn't creating shifts for a job that doesn't belong to them
+        $jobUserId = Job::findOrFail($request->input('job_id'))->user_id;
+        if ($request->user()->id !== $jobUserId) {
+            abort(404, "You do not have a job by that ID.");
+        }
+
         $shiftData = $request->all();
-
         $shiftData['user_id'] = $request->user()->id;
-
         Shift::makeValidator($shiftData)->validate();
-
         $request->user()->shifts()->create($shiftData);
     }
 
@@ -37,7 +44,12 @@ class ShiftController extends Controller
             foreach ($request->json()->all() as $params) {
                 array_push($merged, [$params['column'], $params['operator'], $params['value']]);
             };
-            return $request->user()->shifts()->where($merged)->get();
+
+            $shifts = $request->user()->shifts()->where($merged)->get();
+            foreach ($shifts as $shift) {
+                $this->authorize('view', $shift);
+            }
+            return $shifts;
         }
         else {
             abort(400, 'Requests for this endpoint are only accepted in JSON format.');
@@ -49,7 +61,9 @@ class ShiftController extends Controller
      */
     public function update(Request $request)
     {
-        $request->user()->shifts()->findOrFail($request->input('id'))->update($request->all());
+        $shift = $request->user()->shifts()->findOrFail($request->input('id'));
+        $this->authorize('update', $shift);
+        $shift->update($request->all());
     }
 
     /**
@@ -57,6 +71,8 @@ class ShiftController extends Controller
      */
     public function delete(Request $request)
     {
-        $request->user()->shifts()->findOrFail($request->input('id'))->delete();
+        $shift = $request->user()->shifts()->findOrFail($request->input('id'));
+        $this->authorize('delete', $shift);
+        $shift->delete();
     }
 }

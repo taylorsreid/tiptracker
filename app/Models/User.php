@@ -39,7 +39,8 @@ class User extends Authenticatable
         'email_verified_at',
         'two_factor_secret',
         'two_factor_recovery_codes',
-        'updated_at'
+        'updated_at',
+        'is_admin'
     ];
 
     /**

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class JobController extends Controller
 {
@@ -17,10 +17,8 @@ class JobController extends Controller
      */
     public function create(Request $request)
     {
-        Validator::make($request->all(), [
-            'title' => ['required', 'string', 'max:255']
-        ])->validate();
-
+        $this->authorize('create', Job::class);
+        Job::makeValidator($request->all())->validate();
         $request->user()->jobs()->create($request->all());
     }
 
@@ -29,7 +27,11 @@ class JobController extends Controller
      */
     public function read(Request $request)
     {
-        return $request->user()->jobs()->get();
+        $jobs = $request->user()->jobs()->get();
+        foreach ($jobs as $job) {
+            $this->authorize('view', $job);
+        }
+        return $jobs;
     }
 
     /**
@@ -37,7 +39,9 @@ class JobController extends Controller
      */
     public function update(Request $request)
     {
-        $request->user()->jobs()->findOrFail($request->input('id'))->update($request->all());
+        $job = $request->user()->jobs()->findOrFail($request->input('id'));
+        $this->authorize('update', $job);
+        $job->update($request->all());
     }
 
     /**
@@ -45,6 +49,8 @@ class JobController extends Controller
      */
     public function delete(Request $request)
     {
-        $request->user()->jobs()->findOrFail($request->input('id'))->delete();
+        $job = $request->user()->jobs()->findOrFail($request->input('id'));
+        $this->authorize('delete', $job);
+        $job->delete();
     }
 }

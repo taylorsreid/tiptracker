@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Shift;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ShiftPolicy
 {
@@ -13,7 +12,7 @@ class ShiftPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->is_admin;
     }
 
     /**
@@ -21,7 +20,7 @@ class ShiftPolicy
      */
     public function view(User $user, Shift $shift): bool
     {
-        //
+        return $user->id === $shift->user_id || $user->is_admin;
     }
 
     /**
@@ -29,7 +28,7 @@ class ShiftPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +36,7 @@ class ShiftPolicy
      */
     public function update(User $user, Shift $shift): bool
     {
-        //
+        return $user->id === $shift->user_id || $user->is_admin;
     }
 
     /**
@@ -45,7 +44,7 @@ class ShiftPolicy
      */
     public function delete(User $user, Shift $shift): bool
     {
-        //
+        return $user->id === $shift->user_id || $user->is_admin;
     }
 
     /**
@@ -53,7 +52,7 @@ class ShiftPolicy
      */
     public function restore(User $user, Shift $shift): bool
     {
-        //
+        return $user->id === $shift->user_id|| $user->is_admin;
     }
 
     /**
@@ -61,6 +60,6 @@ class ShiftPolicy
      */
     public function forceDelete(User $user, Shift $shift): bool
     {
-        //
+        return $user->is_admin;
     }
 }
