@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,21 +11,7 @@ class UserController extends Controller
         $this->middleware('auth:sanctum');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index()
-    // {
-    //     //
-    // }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function create(Request $request)
-    // {
-    //     // controlled by app\Actions\Fortify\CreateNewUser
-    // }
+    // create function is handled by auth/register endpoint
 
     /**
      * Display the specified resource.

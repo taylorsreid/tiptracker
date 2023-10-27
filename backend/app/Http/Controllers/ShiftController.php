@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use App\Models\Shift;
-use Illuminate\Database\RecordsNotFoundException;
 use Illuminate\Http\Request;
 
 class ShiftController extends Controller
@@ -22,8 +21,7 @@ class ShiftController extends Controller
         $this->authorize('create', Shift::class);
 
         // check that the user isn't creating shifts for a job that doesn't belong to them
-        $jobUserId = Job::findOrFail($request->input('job_id'))->user_id;
-        if ($request->user()->id !== $jobUserId) {
+        if ($request->user()->id !== Job::findOrFail($request->input('job_id'))->user_id) {
             abort(404, "You do not have a job by that ID.");
         }
 

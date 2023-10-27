@@ -3,7 +3,6 @@
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,16 +15,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-// only for testing
-Route::any('/test', function (Request $request) {
-    if (config('app.debug')) {
-        return response($request);
-    }
-    else {
-        abort(404);
-    }
-});
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/user', 'read');
