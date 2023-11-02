@@ -1,6 +1,6 @@
 <?php
 
-return [
+$config = [
 
     /*
     |--------------------------------------------------------------------------
@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['*'], // must be * since api and frontend will be on separate subdomains
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['https://tiptracker.taylorsreid.com/*'],
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +29,13 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true, // must be true since api and frontend will be on separate subdomains
 
 ];
+
+// add allow localhost if app is in debug mode
+if (config('app.debug')) {
+    array_push($config['allowed_origins'], 'http://localhost:*');
+}
+
+return $config;

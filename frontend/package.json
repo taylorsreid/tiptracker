@@ -9,9 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.6.0",
+    "js-cookie": "^3.0.5",
+    "mdb-vue-ui-kit": "^4.1.1",
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.5",
     "@vitejs/plugin-vue": "^4.2.3",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",

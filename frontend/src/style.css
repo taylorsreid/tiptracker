@@ -1,12 +1,4 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -77,4 +69,30 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.btn-secondary {
+  --mdb-btn-bg: #008000;
+  --mdb-btn-color: #fff;
+  --mdb-btn-box-shadow: 0 4px 9px -4px #008000;
+  --mdb-btn-hover-bg: #008000;
+  --mdb-btn-hover-color: #fff;
+  --mdb-btn-focus-bg: #008000;
+  --mdb-btn-focus-color: #fff;
+  --mdb-btn-active-bg: #008000;
+  --mdb-btn-active-color: #fff;
+  --mdb-btn-box-shadow-state: 0 8px 9px -4px rgba(59, 113, 202, 0.3), 0 4px 18px 0 rgba(59, 113, 202, 0.2);
+}
+
+.btn-primary {
+  --mdb-btn-bg: #00ff00;
+  --mdb-btn-color: #fff;
+  --mdb-btn-box-shadow: 0 4px 9px -4px #00ff00;
+  --mdb-btn-hover-bg: #00ff00;
+  --mdb-btn-hover-color: #fff;
+  --mdb-btn-focus-bg: #00ff00;
+  --mdb-btn-focus-color: #fff;
+  --mdb-btn-active-bg: #00ff00;
+  --mdb-btn-active-color: #fff;
+  --mdb-btn-box-shadow-state: 0 8px 9px -4px rgba(227, 235, 247, 0.3), 0 4px 18px 0 rgba(227, 235, 247, 0.2);
 }
