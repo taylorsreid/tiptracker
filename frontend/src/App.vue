@@ -7,29 +7,19 @@
     import { Ref, ref } from 'vue';
     import Home from './components/Home.vue';
     import Login from './components/Login.vue';
-    import axios, { InternalAxiosRequestConfig } from 'axios';
-    import apiUri from './apiUri';
-    import Cookies from "js-cookie";
-
-    axios.defaults.withCredentials = true;
-    axios.defaults.headers.common.Accept = 'application/json'
-
-    axios.interceptors.request.use((config : InternalAxiosRequestConfig) => {
-        config.headers['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
-        return config;
-    });
+    import axios from 'axios';    
 
     let isLoggedIn: Ref<boolean> = ref(localStorage.getItem('userData') !== null);
 
     async function login(email: string, password: string): Promise<void> {
-        axios.get(apiUri + 'sanctum/csrf-cookie')
+        axios.get('sanctum/csrf-cookie')
             .then(() => {
-                axios.post(apiUri + 'auth/login', {
+                axios.post('auth/login', {
                     email: email,
                     password: password
                 })
                     .then(() => {
-                        axios.get(apiUri + 'user')
+                        axios.get('user')
                             .then((response) => {
                                 localStorage.setItem('userData', JSON.stringify(response.data));
                                 isLoggedIn.value = true;
@@ -43,7 +33,7 @@
     }
 
     function logout(): void {
-        axios.post(apiUri + 'auth/logout')
+        axios.post('auth/logout')
             .then(() => {
                 localStorage.clear();
                 isLoggedIn.value = false;
