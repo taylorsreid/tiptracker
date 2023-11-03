@@ -3,13 +3,11 @@
         <MDBNavbarNav right>
             <MDBDropdown class="nav-item" v-model="dropdown6">
                 <MDBDropdownToggle tag="a" class="nav-link" @click="dropdown6 = !dropdown6" right>
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).webp" class="rounded-circle" height="22"
-                        alt="" loading="lazy" />
+                    {{ userData.first_name }} {{ userData.last_name }}
                 </MDBDropdownToggle>
                 <MDBDropdownMenu right>
-                    <MDBDropdownItem href="#">My profile</MDBDropdownItem>
-                    <MDBDropdownItem href="#">Settings</MDBDropdownItem>
-                    <MDBDropdownItem href="#" @click="$emit('logoutClick')">Logout</MDBDropdownItem>
+                    <MDBDropdownItem href="#" @click="">My Profile</MDBDropdownItem>
+                    <MDBDropdownItem href="#" @click="logout">Logout</MDBDropdownItem>
                 </MDBDropdownMenu>
             </MDBDropdown>
         </MDBNavbarNav>
@@ -17,16 +15,30 @@
 </template>
 
 <script setup lang="ts">
-import {
-    MDBNavbar,
-    MDBNavbarNav,
-    MDBDropdown,
-    MDBDropdownToggle,
-    MDBDropdownMenu,
-    MDBDropdownItem,
-} from 'mdb-vue-ui-kit';
-import { ref } from 'vue';
-const dropdown6 = ref(false);
+    import {
+        MDBNavbar,
+        MDBNavbarNav,
+        MDBDropdown,
+        MDBDropdownToggle,
+        MDBDropdownMenu,
+        MDBDropdownItem,
+    } from 'mdb-vue-ui-kit';
+    import { ref } from 'vue';
+    import api from '../api';
+    import router from '../router';
+    const dropdown6 = ref(false);
+
+    let stringData = sessionStorage.getItem('userData')
+    let userData:any;
+    if (stringData !== null) {
+        userData = JSON.parse(stringData)
+    }
+
+    async function logout() {
+        await api.logout()
+        sessionStorage.clear()
+        router.push('/')
+    }
 </script>
 
 <style></style>

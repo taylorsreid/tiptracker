@@ -19,22 +19,29 @@ export default class api {
         });
 
     }
+
+    static async csrf(): Promise<void> {
+        await api.axios.get('sanctum/csrf-cookie')
+    }
     
     // https://jakearchibald.com/2017/await-vs-return-vs-return-await/
     static async login(email: string, password: string): Promise<void> {
-        await api.axios.get('sanctum/csrf-cookie')
         await api.axios.post('auth/login', {
             email: email,
             password: password
         })
+    }
+
+    static async register(userData:object): Promise<void> {
+        await api.axios.post('auth/register', userData)
+    }
+
+    static async getUser(): Promise<Object> {
         let response = await api.axios.get('user')
-        sessionStorage.setItem('userData', JSON.stringify(response.data));
+        return response.data
     }
 
     static async logout(): Promise<void> {
-        api.axios.post('auth/logout')
-            .then(() => {
-                sessionStorage.clear();
-            })
+        await api.axios.post('auth/logout')
     }
 }
