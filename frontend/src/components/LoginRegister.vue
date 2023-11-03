@@ -45,8 +45,9 @@
         password_confirmation: '',
         first_name: '',
         last_name: ''
-    }).value 
-    let errorMessage:Ref<string> = ref('')
+    }).value
+
+    let errorMessage:Ref<string> = ref('') // reactive error message container that gets passed to error component
     let registerMode:Ref<Boolean> = ref(false) // reactive toggleable boolean whether or not to show registration fields
 
     async function login() {
@@ -93,12 +94,5 @@
 </script>
 
 <style>
-    .centerContainer {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-    }
+    
 </style>

@@ -13,6 +13,7 @@
     import { Ref, ref } from 'vue';
     import router from '../router';
     import NavBar from './NavBar.vue';
+    import Error from './Error.vue';
 
     let errorMessage:Ref<string> = ref('')
 
