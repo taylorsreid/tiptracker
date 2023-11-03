@@ -18,7 +18,7 @@
 
         <!-- shows only if in register mode -->
         <MDBBtn v-if="registerMode" color="primary" rounded @click="register">Submit</MDBBtn>
-        <MDBBtn v-if="registerMode" color="secondary" rounded  @click="registerMode = false">Return to Login</MDBBtn>  
+        <MDBBtn v-if="registerMode" color="secondary" rounded  @click="registerMode = false; errorMessage = ''">Return to Login</MDBBtn>  
     </div>
 
     <Error :error-message="errorMessage"></Error>

@@ -1,5 +1,5 @@
 <template>
-    <NavBar></NavBar>
+    <NavBar :user-data="userData"></NavBar>
     <Error :error-message="errorMessage"></Error>
 </template>
 
@@ -16,6 +16,12 @@
     import Error from './Error.vue';
 
     let errorMessage:Ref<string> = ref('')
+
+    let stringData:string | null = sessionStorage.getItem('userData')
+    let userData:object;
+    if (stringData !== null) {
+        userData = JSON.parse(stringData)
+    }
 
 </script>
 

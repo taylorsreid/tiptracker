@@ -3,7 +3,7 @@
         <MDBNavbarNav right>
             <MDBDropdown class="nav-item" v-model="dropdown6">
                 <MDBDropdownToggle tag="a" class="nav-link" @click="dropdown6 = !dropdown6" right>
-                    {{ userData.first_name }} {{ userData.last_name }}
+                    {{ userData?.first_name }} {{ userData?.last_name }}
                 </MDBDropdownToggle>
                 <MDBDropdownMenu right>
                     <MDBDropdownItem href="#" @click="">My Profile</MDBDropdownItem>
@@ -28,11 +28,9 @@
     import router from '../router';
     const dropdown6 = ref(false);
 
-    let stringData = sessionStorage.getItem('userData')
-    let userData:any;
-    if (stringData !== null) {
-        userData = JSON.parse(stringData)
-    }
+    defineProps({
+        userData:Object
+    })
 
     async function logout() {
         await api.logout()
