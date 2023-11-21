@@ -46,7 +46,7 @@
 
     let registerMode:Ref<Boolean> = ref(false) // reactive toggleable boolean whether or not to show registration fields
 
-    const emit = defineEmits(['error', 'hideError'])
+    const emit = defineEmits(['showError', 'hideError'])
 
     async function login() {
         if (userData.email !== '' && userData.password !== '') {
@@ -57,11 +57,11 @@
                 emit('hideError')
                 router.push('/dashboard')
             } catch (error:any) {
-                emit('error', error.response.data.message)
+                emit('showError', error.response.data.message)
             }
         }
         else {
-            emit('error', 'Email and password are required.')
+            emit('showError', 'Email and password are required.')
         }
     }
 
@@ -72,7 +72,7 @@
         for (let [_key, value] of Object.entries(userData)) {
             if (value === '') {
                 requiredFields = false
-                emit('error', 'All fields are required.')
+                emit('showError', 'All fields are required.')
             }
         }
 
@@ -85,7 +85,7 @@
                 emit("hideError")
                 router.push('/dashboard')
             } catch (error:any) {
-                emit('error', error.response.data.message)
+                emit('showError', error.response.data.message)
             } 
         }
   

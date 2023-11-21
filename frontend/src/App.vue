@@ -1,5 +1,5 @@
 <template>
-    <router-view @error="(errorArg:string) => {errorMessage = errorArg}" @hideError="errorMessage = ''"></router-view>
+    <router-view @showError="(errorArg:string) => {errorMessage = errorArg}" @hideError="errorMessage = ''"></router-view>
     <Error :error-message="errorMessage" v-show="errorMessage !== ''" @hideError="errorMessage = ''"></Error>
 </template>
 
