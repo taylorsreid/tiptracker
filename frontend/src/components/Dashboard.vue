@@ -1,6 +1,5 @@
 <template>
     <NavBar :user-data="userData"></NavBar>
-    <Error :error-message="errorMessage"></Error>
 </template>
 
 <script setup lang="ts">
@@ -10,12 +9,8 @@
         router.push('/')
     }
 
-    import { Ref, ref } from 'vue';
     import router from '../router';
     import NavBar from './NavBar.vue';
-    import Error from './Error.vue';
-
-    let errorMessage:Ref<string> = ref('')
 
     let stringData:string | null = sessionStorage.getItem('userData')
     let userData:object;

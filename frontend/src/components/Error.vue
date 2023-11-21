@@ -1,5 +1,8 @@
 <template>
-    <div v-if="errorMessage !== ''" id="errorMessage">{{ errorMessage }}</div>
+    <div id="container">
+        <div id="hideButton"><a href="#" @click="$emit('hideError')">X</a></div>
+        <div id="errorMessage">{{ errorMessage }}</div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -9,5 +12,31 @@ defineProps({
 </script>
 
 <style>
-    
+#container {
+    bottom: 5%;
+    right: 5%;
+    height: fit-content;
+    width: fit-content;
+    position: fixed;
+    background-color: red;
+    border-radius: .5rem;
+    padding-top: 1%;
+    padding-bottom: 2.5%;
+    padding-left: 2.5%;
+    padding-right: 1%;
+    color: black;
+
+}
+
+#hideButton {
+    text-align: right;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    color: white;
+}
 </style>
