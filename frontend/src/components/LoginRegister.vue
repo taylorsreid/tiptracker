@@ -3,22 +3,54 @@
     <div class="centerContainer">
         <h2>Welcome to TipTracker</h2>
 
-        <!-- always shows -->
-        <MDBInput label="Email" size="lg" v-model="userData.email" required />
-        <MDBInput label="Password" type="password" size="lg" v-model="userData.password" required/>
+        <BForm @submit="(e) => {e.preventDefault()}">
+            
+            <!-- always shows -->
+            <BFormInput
+                id="email-input"
+                v-model="userData.email"
+                type="email"
+                placeholder="Email"
+                required
+            />
+            <BFormInput
+                id="password-input"
+                v-model="userData.password"
+                type="password"
+                placeholder="Password"
+                required
+            />
 
-        <!-- shows only if in register mode -->
-        <MDBInput v-if="registerMode" label="Confirm Password" type="password" size="lg" v-model="userData.password_confirmation" />
-        <MDBInput v-if="registerMode" label="First Name" size="lg" v-model="userData.first_name"  />
-        <MDBInput v-if="registerMode" label="Last Name" size="lg" v-model="userData.last_name" />
+            <!-- shows only if in register mode -->
+            <BFormInput
+                id="password-confirmation-input"
+                v-if="registerMode"
+                v-model="userData.password_confirmation"
+                type="password"
+                placeholder="Confirm Password"
+            />
+            <BFormInput
+                id="first-name-input"
+                v-if="registerMode"
+                v-model="userData.first_name"
+                placeholder="First Name"
+            />
+            <BFormInput
+                id="last-name-input"
+                v-if="registerMode"
+                v-model="userData.last_name"
+                placeholder="Last Name"
+            />
 
-        <!-- shows only if in login mode -->
-        <MDBBtn v-if="!registerMode" color="primary" rounded @click="login">Login</MDBBtn>
-        <MDBBtn v-if="!registerMode" color="secondary" rounded @click="registerMode = true; emit('hideError')">Register</MDBBtn>
+            <!-- shows only if in login mode -->
+            <BButton v-if="!registerMode" type="submit" variant="primary" @click="login">Login</BButton>
+            <BButton v-if="!registerMode" variant="secondary" @click="registerMode = true; emit('hideError')">Register</BButton>
 
-        <!-- shows only if in register mode -->
-        <MDBBtn v-if="registerMode" color="primary" rounded @click="register">Submit</MDBBtn>
-        <MDBBtn v-if="registerMode" color="secondary" rounded  @click="registerMode = false; emit('hideError')">Return to Login</MDBBtn>  
+            <!-- shows only if in register mode -->
+            <BButton v-if="registerMode" type="submit" variant="primary" @click="register">Submit</BButton>
+            <BButton v-if="registerMode" type="submit" variant="secondary" @click="registerMode = false; emit('hideError')">Return to Login</BButton>
+
+        </BForm>
     </div>
 
 </template>
@@ -30,7 +62,7 @@
         router.push('/')
     }
 
-    import { MDBBtn, MDBInput } from "mdb-vue-ui-kit";
+    import { BForm, BFormInput, BButton } from "bootstrap-vue-next"
     import { Ref, ref } from 'vue';
     import api from '../api';
     import router from '../router';
