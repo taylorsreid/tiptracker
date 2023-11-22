@@ -19,7 +19,7 @@
     margin-right: auto;
 }
 
-button {
+/* button {
     border-radius: 8px;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
@@ -29,7 +29,7 @@ button {
     background-color: #1a1a1a;
     cursor: pointer;
     transition: border-color 0.25s;
-}
+} */
 
 button:hover {
     border-color: #646cff;
@@ -39,7 +39,7 @@ button:focus, button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
 }
 
-.btn-primary {
+/* .btn-primary {
     --mdb-btn-bg: #00ff00;
     --mdb-btn-color: #fff;
     --mdb-btn-box-shadow: 0 4px 9px -4px #00ff00;
@@ -63,4 +63,4 @@ button:focus, button:focus-visible {
     --mdb-btn-active-bg: #008000;
     --mdb-btn-active-color: #fff;
     --mdb-btn-box-shadow-state: 0 8px 9px -4px rgba(59, 113, 202, 0.3), 0 4px 18px 0 rgba(59, 113, 202, 0.2);
-}
+} */

@@ -11,8 +11,4 @@
 </script>
 
 <style>
-    /* required to offset from the navbar */
-    body {
-        padding-top: 2%;
-    }
 </style>
