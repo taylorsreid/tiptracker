@@ -1,35 +1,34 @@
 <template>
-    <MDBNavbar expand="lg" light bg="light" position="top" container>
-        <MDBNavbarNav right>
-            <MDBDropdown class="nav-item" v-model="dropdown6">
-                <MDBDropdownToggle tag="a" class="nav-link" @click="dropdown6 = !dropdown6" right>
-                    {{ userData?.first_name }} {{ userData?.last_name }}
-                </MDBDropdownToggle>
-                <MDBDropdownMenu right>
-                    <MDBDropdownItem href="#" @click="">My Profile</MDBDropdownItem>
-                    <MDBDropdownItem href="#" @click="logout">Logout</MDBDropdownItem>
-                </MDBDropdownMenu>
-            </MDBDropdown>
-        </MDBNavbarNav>
-    </MDBNavbar>
+    
+    <BNavbar toggleable="lg" variant="primary" v-b-color-mode="'dark'">
+      <BNavbarBrand to="/home">TipTracker</BNavbarBrand>
+      <BNavbarToggle target="nav-collapse" />
+      <BCollapse id="nav-collapse" is-nav>
+        <!-- Right aligned nav items -->
+        <BNavbarNav class="ms-auto mb-2 mb-lg-0">
+          <BNavItemDropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <em>{{ userData.first_name }} {{ userData.last_name }}</em>
+            </template>
+            <BDropdownItem href="#">Profile</BDropdownItem>
+            <BDropdownItem @click="logout">Logout</BDropdownItem>
+          </BNavItemDropdown>
+        </BNavbarNav>
+      </BCollapse>
+    </BNavbar>
+
 </template>
 
 <script setup lang="ts">
-    import {
-        MDBNavbar,
-        MDBNavbarNav,
-        MDBDropdown,
-        MDBDropdownToggle,
-        MDBDropdownMenu,
-        MDBDropdownItem,
-    } from 'mdb-vue-ui-kit';
-    import { ref } from 'vue';
+    
+    import { BNavbar } from 'bootstrap-vue-next';
     import api from '../api';
     import router from '../router';
-    const dropdown6 = ref(false);
+    import UserData from '../userDataInterface';
 
     let stringData:string | null = sessionStorage.getItem('userData')
-    let userData:object;
+    let userData:UserData;
     if (stringData !== null) {
         userData = JSON.parse(stringData)
     }

@@ -8,14 +8,14 @@
             <!-- always shows -->
             <BFormInput
                 id="email-input"
-                v-model="userData.email"
+                v-model="registrationData.email"
                 type="email"
                 placeholder="Email"
                 required
             />
             <BFormInput
                 id="password-input"
-                v-model="userData.password"
+                v-model="registrationData.password"
                 type="password"
                 placeholder="Password"
                 required
@@ -25,20 +25,20 @@
             <BFormInput
                 id="password-confirmation-input"
                 v-if="registerMode"
-                v-model="userData.password_confirmation"
+                v-model="registrationData.password_confirmation"
                 type="password"
                 placeholder="Confirm Password"
             />
             <BFormInput
                 id="first-name-input"
                 v-if="registerMode"
-                v-model="userData.first_name"
+                v-model="registrationData.first_name"
                 placeholder="First Name"
             />
             <BFormInput
                 id="last-name-input"
                 v-if="registerMode"
-                v-model="userData.last_name"
+                v-model="registrationData.last_name"
                 placeholder="Last Name"
             />
 
@@ -68,7 +68,7 @@
     import router from '../router';
 
     // reactive object linked to form above
-    let userData:any = ref({
+    let registrationData:any = ref({
         email: '',
         password: '',
         password_confirmation: '',
@@ -81,10 +81,10 @@
     const emit = defineEmits(['showError', 'hideError'])
 
     async function login() {
-        if (userData.email !== '' && userData.password !== '') {
+        if (registrationData.email !== '' && registrationData.password !== '') {
             try {
                 await api.csrf()
-                await api.login(userData.email, userData.password) // only send email and password, object may contain registration data as well
+                await api.login(registrationData.email, registrationData.password) // only send email and password, object may contain registration data as well
                 sessionStorage.setItem('userData', JSON.stringify(await api.getUser()))
                 emit('hideError')
                 router.push('/')
@@ -101,7 +101,7 @@
 
         // check that all required fields are filled out
         let requiredFields:boolean = true;
-        for (let [_key, value] of Object.entries(userData)) {
+        for (let [_key, value] of Object.entries(registrationData)) {
             if (value === '') {
                 requiredFields = false
                 emit('showError', 'All fields are required.')
@@ -112,7 +112,7 @@
         if (requiredFields) {
             try {
                 await api.csrf()
-                await api.register(userData)
+                await api.register(registrationData)
                 sessionStorage.setItem('userData', JSON.stringify(await api.getUser()))
                 emit("hideError")
                 router.push('/')

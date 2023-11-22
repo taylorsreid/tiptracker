@@ -8,6 +8,15 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AddShift: typeof import('./src/components/AddShift.vue')['default']
+    BButton: typeof import('bootstrap-vue-next')['BButton']
+    BCollapse: typeof import('bootstrap-vue-next')['BCollapse']
+    BDropdownItem: typeof import('bootstrap-vue-next')['BDropdownItem']
+    BFormInput: typeof import('bootstrap-vue-next')['BFormInput']
+    BNavbarBrand: typeof import('bootstrap-vue-next')['BNavbarBrand']
+    BNavbarNav: typeof import('bootstrap-vue-next')['BNavbarNav']
+    BNavbarToggle: typeof import('bootstrap-vue-next')['BNavbarToggle']
+    BNavForm: typeof import('bootstrap-vue-next')['BNavForm']
+    BNavItemDropdown: typeof import('bootstrap-vue-next')['BNavItemDropdown']
     Dashboard: typeof import('./src/components/Dashboard.vue')['default']
     Error: typeof import('./src/components/Error.vue')['default']
     Home: typeof import('./src/components/Home.vue')['default']
@@ -15,5 +24,8 @@ declare module 'vue' {
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+  }
+  export interface ComponentCustomProperties {
+    vBColorMode: typeof import('bootstrap-vue-next')['vBColorMode']
   }
 }
