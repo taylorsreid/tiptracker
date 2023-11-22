@@ -27,7 +27,7 @@
 
     // if user is already logged in, redirect to dashboard
     if (sessionStorage.getItem('userData') !== null) {
-        router.push('/dashboard')
+        router.push('/')
     }
 
     import { MDBBtn, MDBInput } from "mdb-vue-ui-kit";
@@ -55,7 +55,7 @@
                 await api.login(userData.email, userData.password) // only send email and password, object may contain registration data as well
                 sessionStorage.setItem('userData', JSON.stringify(await api.getUser()))
                 emit('hideError')
-                router.push('/dashboard')
+                router.push('/')
             } catch (error:any) {
                 emit('showError', error.response.data.message)
             }
@@ -83,7 +83,7 @@
                 await api.register(userData)
                 sessionStorage.setItem('userData', JSON.stringify(await api.getUser()))
                 emit("hideError")
-                router.push('/dashboard')
+                router.push('/')
             } catch (error:any) {
                 emit('showError', error.response.data.message)
             } 

@@ -28,14 +28,16 @@
     import router from '../router';
     const dropdown6 = ref(false);
 
-    defineProps({
-        userData:Object
-    })
+    let stringData:string | null = sessionStorage.getItem('userData')
+    let userData:object;
+    if (stringData !== null) {
+        userData = JSON.parse(stringData)
+    }
 
     async function logout() {
         await api.logout()
         sessionStorage.clear()
-        router.push('/')
+        router.push('/login')
     }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-    <div id="container">
+    <div id="errorContainer">
         <div id="hideButton"><a href="#" @click="$emit('hideError')">X</a></div>
         <div id="errorMessage">{{ errorMessage }}</div>
     </div>
@@ -12,7 +12,7 @@ defineProps({
 </script>
 
 <style>
-#container {
+#errorContainer {
     bottom: 5%;
     right: 5%;
     height: fit-content;
