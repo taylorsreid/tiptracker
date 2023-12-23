@@ -3,9 +3,11 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title></title>
+        <title>TipTracker</title>
+        @vite('resources/js/main.ts')
+        @csrf
     </head>
     <body>
-        <p>If you're seeing this then something went wrong.</p>
+        <div id="app"></div>
     </body>
 </html>

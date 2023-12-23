@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AddShift: typeof import('./src/components/AddShift.vue')['default']
     BCollapse: typeof import('bootstrap-vue-next')['BCollapse']
     BDropdownItem: typeof import('bootstrap-vue-next')['BDropdownItem']
     BForm: typeof import('bootstrap-vue-next')['BForm']
@@ -17,11 +16,6 @@ declare module 'vue' {
     BNavbarNav: typeof import('bootstrap-vue-next')['BNavbarNav']
     BNavbarToggle: typeof import('bootstrap-vue-next')['BNavbarToggle']
     BNavItemDropdown: typeof import('bootstrap-vue-next')['BNavItemDropdown']
-    Dashboard: typeof import('./src/components/Dashboard.vue')['default']
-    Error: typeof import('./src/components/Error.vue')['default']
-    Home: typeof import('./src/components/Home.vue')['default']
-    LoginRegister: typeof import('./src/components/LoginRegister.vue')['default']
-    NavBar: typeof import('./src/components/NavBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

@@ -44,11 +44,11 @@
 
             <!-- shows only if in login mode -->
             <BButton v-if="!registerMode" type="submit" variant="primary" @click="login">Login</BButton>
-            <BButton v-if="!registerMode" variant="secondary" @click="registerMode = true; emit('hideError')">Register</BButton>
+            <BButton v-if="!registerMode" variant="secondary" @click="registerMode = true">Register</BButton>
 
             <!-- shows only if in register mode -->
             <BButton v-if="registerMode" type="submit" variant="primary" @click="register">Submit</BButton>
-            <BButton v-if="registerMode" type="submit" variant="secondary" @click="registerMode = false; emit('hideError')">Return to Login</BButton>
+            <BButton v-if="registerMode" type="submit" variant="secondary" @click="registerMode = false">Return to Login</BButton>
 
         </BForm>
     </div>
@@ -83,7 +83,7 @@
     async function login() {
         if (registrationData.email !== '' && registrationData.password !== '') {
             try {
-                await api.csrf()
+                // await api.csrf()
                 await api.login(registrationData.email, registrationData.password) // only send email and password, object may contain registration data as well
                 sessionStorage.setItem('userData', JSON.stringify(await api.getUser()))
                 emit('hideError')
@@ -111,7 +111,7 @@
         // if they are then proceed sending request to api
         if (requiredFields) {
             try {
-                await api.csrf()
+                // await api.csrf()
                 await api.register(registrationData)
                 sessionStorage.setItem('userData', JSON.stringify(await api.getUser()))
                 emit("hideError")

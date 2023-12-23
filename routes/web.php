@@ -35,3 +35,8 @@ Route::controller(ShiftController::class)->group(function () {
     Route::patch('/shift', 'update');
     Route::delete('/shift', 'delete');
 });
+
+// must be the last route listed as a catch all
+Route::get('{any?}', function () {
+    return view('app');
+})->where('any', '.*');
