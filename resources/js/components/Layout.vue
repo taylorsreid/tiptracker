@@ -1,6 +1,6 @@
 <template>
 
-    <BNavbar toggleable="lg" variant="primary" v-b-color-mode="'dark'">
+    <BNavbar toggleable="lg" variant="success" v-b-color-mode="'light'">
         <BNavbarBrand to="/">TipTracker</BNavbarBrand>
         <BNavbarToggle target="nav-collapse" />
         <BCollapse id="nav-collapse" is-nav>
@@ -30,11 +30,11 @@
     import { BNavbar } from 'bootstrap-vue-next';
     import api from '../api';
     import router from '../router';
-    import { UserData } from '../types';
+    import { User } from '../types';
 
     let errorMessage:Ref<string> = ref('')
     let stringData:string | null = sessionStorage.getItem('userData')
-    let userData:UserData;
+    let userData:User;
     if (stringData !== null) {
         userData = JSON.parse(stringData)
     }

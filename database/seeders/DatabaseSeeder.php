@@ -22,20 +22,19 @@ class DatabaseSeeder extends Seeder
             'password' => 'password'
         ]));
 
-        $job = (new Job([
-            'title' => 'Test Job 1',
+        $job1 = (new Job([
+            'title' => 'Bellman',
+            'default_hourly_rate' => 11,
+            'default_overtime_rate' => 16.50
+        ]));
+
+        $job2 = (new Job([
+            'title' => 'Valet',
             'default_hourly_rate' => 10,
             'default_overtime_rate' => 15
         ]));
 
         $user->save();
-        $user->jobs()->save($job);
-
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $user->jobs()->saveMany([$job1, $job2]);
     }
 }

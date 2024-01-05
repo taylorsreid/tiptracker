@@ -48,7 +48,7 @@ class Shift extends Model
             'job_id' => ['required', 'numeric'],
             'date' => ['required', 'date'],
             'hours_worked_regular' => ['nullable', 'numeric'],
-            'hour_worked_overtime' => ['nullable', 'numeric'],
+            'hours_worked_overtime' => ['nullable', 'numeric'],
             'hourly_rate_regular' => ['nullable', 'numeric'],
             'hourly_rate_overtime' => ['nullable', 'numeric'],
             'tips_cash' => ['nullable', 'numeric'],

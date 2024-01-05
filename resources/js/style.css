@@ -2,7 +2,6 @@
     max-width: 1280px;
     margin: 0 auto;
     padding: 2rem;
-    text-align: center;
 }
 
 .centerContainer {
@@ -10,26 +9,13 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    transform: translate(-49%, -49%); /* use this instead because -50%, -50% causes elements to be "crushed" and partially obscured */
 }
 
 .centerTable {
     margin-left: auto;
     margin-right: auto;
 }
-
-/* button {
-    border-radius: 8px;
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
-    cursor: pointer;
-    transition: border-color 0.25s;
-} */
 
 button:hover {
     border-color: #646cff;
@@ -38,29 +24,3 @@ button:hover {
 button:focus, button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
 }
-
-/* .btn-primary {
-    --mdb-btn-bg: #00ff00;
-    --mdb-btn-color: #fff;
-    --mdb-btn-box-shadow: 0 4px 9px -4px #00ff00;
-    --mdb-btn-hover-bg: #00ff00;
-    --mdb-btn-hover-color: #fff;
-    --mdb-btn-focus-bg: #00ff00;
-    --mdb-btn-focus-color: #fff;
-    --mdb-btn-active-bg: #00ff00;
-    --mdb-btn-active-color: #fff;
-    --mdb-btn-box-shadow-state: 0 8px 9px -4px rgba(227, 235, 247, 0.3), 0 4px 18px 0 rgba(227, 235, 247, 0.2);
-}
-
-.btn-secondary {
-    --mdb-btn-bg: #008000;
-    --mdb-btn-color: #fff;
-    --mdb-btn-box-shadow: 0 4px 9px -4px #008000;
-    --mdb-btn-hover-bg: #008000;
-    --mdb-btn-hover-color: #fff;
-    --mdb-btn-focus-bg: #008000;
-    --mdb-btn-focus-color: #fff;
-    --mdb-btn-active-bg: #008000;
-    --mdb-btn-active-color: #fff;
-    --mdb-btn-box-shadow-state: 0 8px 9px -4px rgba(59, 113, 202, 0.3), 0 4px 18px 0 rgba(59, 113, 202, 0.2);
-} */

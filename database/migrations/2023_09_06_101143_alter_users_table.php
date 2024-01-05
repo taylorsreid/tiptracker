@@ -14,7 +14,7 @@ return new class extends Migration
     {
         //
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignIdFor(Job::class)->nullable()->constrained(); //default job
+            $table->foreignIdFor(Job::class, 'default_job_id')->nullable()->constrained('jobs'); //default job
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeignIdFor(Job::class);
+            $table->dropForeignIdFor(Job::class, 'default_job_id');
         });
     }
 };
