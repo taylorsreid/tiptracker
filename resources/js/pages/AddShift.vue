@@ -1,14 +1,14 @@
 <template>
     <Layout>
         <div class="centerContainer">
-            <BForm @submit="submit">
+            <BForm v-if="user.jobs.length" @submit="submit">
                 <div>
                     <div>
                         <label for="job_id">Job:</label>
                     </div>
                     <div>
                         <select v-model="currentShift.job_id" id="job_id" @change="jobUpdated" required>
-                            <option v-for="(job, index) in user?.jobs" :value="job.id">{{ job.title }}</option>
+                            <option v-for="(job) in user?.jobs" :value="job.id">{{ job.title }}</option>
                         </select>
                     </div>
                 </div>
@@ -87,6 +87,9 @@
                 <BButton variant="success" type="submit">Submit</BButton>
                 <BButton variant="danger" @click="router.push('/')">Cancel</BButton>
             </BForm>
+            <div v-else>
+                You need to add at least one job to your <RouterLink to="/profile">profile</RouterLink> before you can add a shift.
+            </div>
         </div>
 
     </Layout>
@@ -100,15 +103,17 @@ import router from '../router';
 import api from '../api';
 import { AxiosResponse } from 'axios';
 
-const user: User = JSON.parse(sessionStorage.getItem('userData'));
+const user: User = JSON.parse(sessionStorage.getItem('userData') ?? '');
 let currentJob: Ref<Job> = ref(new Job());
 const currentShift: Ref<Shift> = ref(new Shift());
 const hasOvertime: Ref<boolean> = ref(false);
 
 function jobUpdated(e: Event) {
     // get job from user job array based on key
-    currentJob.value = user.jobs.find(j => parseInt((e.target as HTMLInputElement).value) === j.id)
-
+    if (user.jobs !== undefined) {
+        currentJob.value = user.jobs.find(j => parseInt((e.target as HTMLInputElement).value) === j.id) ?? new Job()
+    }
+    
     // set shift data to equal job defaults
     currentShift.value.job_id = currentJob.value.id
     currentShift.value.hourly_rate_regular = currentJob.value.default_hourly_rate
@@ -117,8 +122,8 @@ function jobUpdated(e: Event) {
 
 async function submit() {
     if (!hasOvertime.value) {
-        currentShift.value.hours_worked_overtime = null
-        currentShift.value.hourly_rate_overtime = null
+        delete currentShift.value.hours_worked_overtime
+        delete currentShift.value.hourly_rate_overtime
     }
 
     const response:AxiosResponse = await api.shift.post(currentShift.value)

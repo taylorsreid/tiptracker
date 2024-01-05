@@ -11,7 +11,7 @@
                     <template #button-content>
                         <em>{{ userData?.first_name }} {{ userData?.last_name }}</em>
                     </template>
-                    <BDropdownItem href="#">Profile</BDropdownItem>
+                    <BDropdownItem><RouterLink to="/profile">Profile</RouterLink></BDropdownItem>
                     <BDropdownItem @click="logout">Logout</BDropdownItem>
                 </BNavItemDropdown>
             </BNavbarNav>
@@ -40,7 +40,7 @@
     }
 
     async function logout() {
-        await api.logout()
+        await api.auth.logout()
         sessionStorage.clear()
         router.push('/login')
     }

@@ -83,9 +83,8 @@
     async function login() {
         if (registrationData.email !== '' && registrationData.password !== '') {
             try {
-                // await api.csrf()
-                await api.login(registrationData.email, registrationData.password) // only send email and password, object may contain registration data as well
-                sessionStorage.setItem('userData', JSON.stringify(await api.getUser()))
+                await api.auth.login(registrationData.email, registrationData.password) // only send email and password, object may contain registration data as well
+                sessionStorage.setItem('userData', JSON.stringify(await api.user.get()))
                 emit('hideError')
                 router.push('/')
             } catch (error:any) {
@@ -111,9 +110,8 @@
         // if they are then proceed sending request to api
         if (requiredFields) {
             try {
-                // await api.csrf()
-                await api.register(registrationData)
-                sessionStorage.setItem('userData', JSON.stringify(await api.getUser()))
+                await api.auth.register(registrationData)
+                sessionStorage.setItem('userData', JSON.stringify(await api.user.get()))
                 emit("hideError")
                 router.push('/')
             } catch (error:any) {

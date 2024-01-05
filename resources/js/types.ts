@@ -1,10 +1,10 @@
 export class Job {
-    id: number
-    title: string
+    id: number | undefined
+    title: string | undefined
     default_hourly_rate?: number
     default_overtime_rate?: number
-    created_at: string
-    updated_at: string
+    created_at: string | undefined
+    updated_at: string | undefined
 }
 
 export interface User {
@@ -19,8 +19,8 @@ export interface User {
 }
 
 export class Shift {
-    date: string
-    job_id: number
+    date: string | undefined
+    job_id: number | undefined
     hours_worked_regular?: number
     hours_worked_overtime?: number
     hourly_rate_regular?: number
