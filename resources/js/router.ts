@@ -2,6 +2,7 @@ import { Router, createRouter, createWebHashHistory } from 'vue-router'
 import LoginRegister from './pages/LoginRegister.vue'
 import AddShift from './pages/AddShift.vue'
 import Home from './pages/Home.vue'
+import Profile from './pages/Profile.vue'
 
 let router:Router = createRouter({
     history: createWebHashHistory(),
@@ -23,6 +24,13 @@ let router:Router = createRouter({
         {
             path: '/addshift',
             component: AddShift,
+            meta : {
+                isPublic: false
+            }
+        },
+        {
+            path: '/profile',
+            component: Profile,
             meta : {
                 isPublic: false
             }
