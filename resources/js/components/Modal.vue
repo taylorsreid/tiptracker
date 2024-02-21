@@ -1,24 +1,25 @@
 <template>
-    <div id="errorContainer">
-        <div id="hideButton"><a href="#" @click="$emit('hideError')">X</a></div>
-        <div id="errorMessage">{{ errorMessage }}</div>
+    <div v-show="visible" id="container">
+        <div id="hideButton" @click="visible = !visible">X</div>
+        <div id="message">{{ message }}</div>
     </div>
 </template>
 
 <script setup lang="ts">
-defineProps({
-    errorMessage: String
-})
+import { useModalStore } from '../stores';
+import { storeToRefs } from 'pinia'
+
+const { message, color, visible } = storeToRefs(useModalStore())
 </script>
 
-<style>
-#errorContainer {
+<style scoped>
+#container {
     bottom: 5%;
     right: 5%;
     height: fit-content;
     width: fit-content;
     position: fixed;
-    background-color: red;
+    background-color: v-bind(color);
     border-radius: .5rem;
     padding-top: 1%;
     padding-bottom: 2.5%;

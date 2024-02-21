@@ -66,6 +66,9 @@
     import { Ref, ref } from 'vue';
     import api from '../api';
     import router from '../router';
+    import { useModalStore } from "../stores";
+
+    const modal = useModalStore()
 
     // reactive object linked to form above
     let registrationData:any = ref({
@@ -78,21 +81,19 @@
 
     let registerMode:Ref<Boolean> = ref(false) // reactive toggleable boolean whether or not to show registration fields
 
-    const emit = defineEmits(['showError', 'hideError'])
-
     async function login() {
         if (registrationData.email !== '' && registrationData.password !== '') {
             try {
                 await api.auth.login(registrationData.email, registrationData.password) // only send email and password, object may contain registration data as well
                 sessionStorage.setItem('userData', JSON.stringify(await api.user.get()))
-                emit('hideError')
+                modal.hide()
                 router.push('/')
             } catch (error:any) {
-                emit('showError', error.response.data.message)
+                modal.set(error.response.data.message)
             }
         }
         else {
-            emit('showError', 'Email and password are required.')
+            modal.set('Email and password are required.')
         }
     }
 
@@ -103,7 +104,7 @@
         for (let [_key, value] of Object.entries(registrationData)) {
             if (value === '') {
                 requiredFields = false
-                emit('showError', 'All fields are required.')
+                modal.set('All fields are required.')
             }
         }
 
@@ -112,10 +113,10 @@
             try {
                 await api.auth.register(registrationData)
                 sessionStorage.setItem('userData', JSON.stringify(await api.user.get()))
-                emit("hideError")
+                modal.hide()
                 router.push('/')
             } catch (error:any) {
-                emit('showError', error.response.data.message)
+                modal.set(error.response.data.message)
             } 
         }
   

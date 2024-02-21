@@ -18,21 +18,16 @@
         </BCollapse>
     </BNavbar>
 
-    <slot></slot>
-
-    <Error :error-message="errorMessage" v-show="errorMessage !== ''" @hideError="errorMessage = ''" />
+    <slot />
 
 </template>
 
 <script setup lang="ts">
-    import { Ref, ref } from 'vue';
-    import Error from './Error.vue';
     import { BNavbar } from 'bootstrap-vue-next';
     import api from '../api';
     import router from '../router';
     import { User } from '../types';
 
-    let errorMessage:Ref<string> = ref('')
     let stringData:string | null = sessionStorage.getItem('userData')
     let userData:User;
     if (stringData !== null) {

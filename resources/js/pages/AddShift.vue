@@ -27,7 +27,7 @@
                         <label for="hours_worked_regular">Hours Worked (regular):</label>
                     </div>
                     <div>
-                        <input v-model="currentShift.hours_worked_regular" id="hours_worked_regular" type="number" step=".01" required />
+                        <input v-model="currentShift.hours_worked_regular" id="hours_worked_regular" type="number" step=".01" min="0" required />
                     </div>
                 </div>
 
@@ -36,7 +36,7 @@
                         <label for="hourly_rate_regular">Hourly Rate (regular):</label>
                     </div>
                     <div>
-                        <input v-model="currentShift.hourly_rate_regular" id="hourly_rate_regular" type="number" step=".01" required />
+                        <input v-model="currentShift.hourly_rate_regular" id="hourly_rate_regular" type="number" step=".01" min="0" required />
                         <BButton variant="warning" @click="currentShift.hourly_rate_regular = currentJob.default_hourly_rate">Reset</BButton>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                             <label for="hours_worked_overtime">Hours Worked (overtime):</label>
                         </div>
                         <div>
-                            <input v-model="currentShift.hours_worked_overtime" id="hours_worked_overtime" type="number" step=".01" />
+                            <input v-model="currentShift.hours_worked_overtime" id="hours_worked_overtime" type="number" step=".01" min="0" />
                         </div>
                     </div>
 
@@ -60,7 +60,7 @@
                             <label for="hourly_rate_overtime">Hourly Rate (overtime):</label>
                         </div>
                         <div>
-                            <input v-model="currentShift.hourly_rate_overtime" id="hourly_rate_overtime" type="number" step=".01" />
+                            <input v-model="currentShift.hourly_rate_overtime" id="hourly_rate_overtime" type="number" step=".01" min="0" />
                             <BButton variant="warning" @click="currentShift.hourly_rate_overtime = currentJob.default_overtime_rate">Reset</BButton>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                         <label for="tips_cash">Cash Tips:</label>
                     </div>
                     <div>
-                        <input v-model="currentShift.tips_cash" type="number" id="tips_cash" step=".01">
+                        <input v-model="currentShift.tips_cash" type="number" id="tips_cash" step=".01" min="0">
                     </div>
                 </div>
 
@@ -80,10 +80,10 @@
                         <label for="tips_charge">Charge Tips:</label>
                     </div>
                     <div>
-                        <input v-model="currentShift.tips_charge" type="number" id="tips_charge" step=".01">
+                        <input v-model="currentShift.tips_charge" type="number" id="tips_charge" step=".01" min="0">
                     </div>
                 </div>
-
+                <br>
                 <BButton variant="success" type="submit">Submit</BButton>
                 <BButton variant="danger" @click="router.push('/')">Cancel</BButton>
             </BForm>
@@ -101,8 +101,10 @@ import { Ref, ref } from 'vue';
 import { Job, Shift, User } from '../types';
 import router from '../router';
 import api from '../api';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
+import { useModalStore } from '../stores';
 
+const modal = useModalStore()
 const user: User = JSON.parse(sessionStorage.getItem('userData') ?? '');
 let currentJob: Ref<Job> = ref(new Job());
 const currentShift: Ref<Shift> = ref(new Shift());
@@ -126,8 +128,26 @@ async function submit() {
         delete currentShift.value.hourly_rate_overtime
     }
 
-    const response:AxiosResponse = await api.shift.post(currentShift.value)
-    alert(response.status)
+    try {
+        const response:AxiosResponse = await api.shift.post(currentShift.value)
+        if (response) {
+            modal.set('Shift added successfully.', 'green')
+            currentShift.value = new Shift() // reset form
+        }
+        else {
+            throw new Error('Unknown Error')
+        }
+    } catch (error:any) {
+        if (error instanceof AxiosError) {
+            modal.set(error.response?.data.message)
+        }
+        else if (error instanceof Error) {
+            modal.set(error.message)
+        }
+        else {
+            modal.set(error)
+        }
+    }
 }
 
 </script>
