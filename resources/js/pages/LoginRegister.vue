@@ -8,14 +8,14 @@
             <!-- always shows -->
             <BFormInput
                 id="email-input"
-                v-model="registrationData.email"
+                v-model="loginRegData.email"
                 type="email"
                 placeholder="Email"
                 required
             />
             <BFormInput
                 id="password-input"
-                v-model="registrationData.password"
+                v-model="loginRegData.password"
                 type="password"
                 placeholder="Password"
                 required
@@ -25,20 +25,20 @@
             <BFormInput
                 id="password-confirmation-input"
                 v-if="registerMode"
-                v-model="registrationData.password_confirmation"
+                v-model="loginRegData.password_confirmation"
                 type="password"
                 placeholder="Confirm Password"
             />
             <BFormInput
                 id="first-name-input"
                 v-if="registerMode"
-                v-model="registrationData.first_name"
+                v-model="loginRegData.first_name"
                 placeholder="First Name"
             />
             <BFormInput
                 id="last-name-input"
                 v-if="registerMode"
-                v-model="registrationData.last_name"
+                v-model="loginRegData.last_name"
                 placeholder="Last Name"
             />
 
@@ -56,70 +56,41 @@
 </template>
 
 <script setup lang="ts">
+    import { BForm, BFormInput, BButton } from "bootstrap-vue-next"
+    import { Ref, ref } from 'vue';
+    import router from '../router';
+    import { useAuthStore, useModalStore } from "../stores";
+    import { LoginOrRegistrationData } from "../types";
+
+    const authStore = useAuthStore()
+    const modalStore = useModalStore()
 
     // if user is already logged in, redirect to dashboard
-    if (sessionStorage.getItem('userData') !== null) {
+    if (authStore.isLoggedIn) {
         router.push('/')
     }
 
-    import { BForm, BFormInput, BButton } from "bootstrap-vue-next"
-    import { Ref, ref } from 'vue';
-    import api from '../api';
-    import router from '../router';
-    import { useModalStore } from "../stores";
-
-    const modal = useModalStore()
-
-    // reactive object linked to form above
-    let registrationData:any = ref({
-        email: '',
-        password: '',
-        password_confirmation: '',
-        first_name: '',
-        last_name: ''
-    }).value
-
-    let registerMode:Ref<Boolean> = ref(false) // reactive toggleable boolean whether or not to show registration fields
+    const loginRegData:Ref<LoginOrRegistrationData> = ref({} as LoginOrRegistrationData)
+    const registerMode:Ref<Boolean> = ref(false) // reactive toggleable boolean whether or not to show registration fields
 
     async function login() {
-        if (registrationData.email !== '' && registrationData.password !== '') {
-            try {
-                await api.auth.login(registrationData.email, registrationData.password) // only send email and password, object may contain registration data as well
-                sessionStorage.setItem('userData', JSON.stringify(await api.user.get()))
-                modal.hide()
-                router.push('/')
-            } catch (error:any) {
-                modal.set(error.response.data.message)
-            }
+        const [success, reason] = await authStore.login(loginRegData.value)
+        if (success) {
+            router.push('/')
         }
         else {
-            modal.set('Email and password are required.')
+            modalStore.set(reason)
         }
     }
 
     async function register() {
-
-        // check that all required fields are filled out
-        let requiredFields:boolean = true;
-        for (let [_key, value] of Object.entries(registrationData)) {
-            if (value === '') {
-                requiredFields = false
-                modal.set('All fields are required.')
-            }
+        const [success, reason] = await authStore.register(loginRegData.value)
+        if (success) {
+            router.push('/')
         }
-
-        // if they are then proceed sending request to api
-        if (requiredFields) {
-            try {
-                await api.auth.register(registrationData)
-                sessionStorage.setItem('userData', JSON.stringify(await api.user.get()))
-                modal.hide()
-                router.push('/')
-            } catch (error:any) {
-                modal.set(error.response.data.message)
-            } 
+        else {
+            modalStore.set(reason)
         }
-  
     }
 
 </script>

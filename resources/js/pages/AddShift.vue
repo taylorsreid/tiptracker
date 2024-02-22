@@ -102,18 +102,18 @@ import { Job, Shift, User } from '../types';
 import router from '../router';
 import api from '../api';
 import { AxiosResponse, AxiosError } from 'axios';
-import { useModalStore } from '../stores';
+import { useAuthStore, useModalStore } from '../stores';
 
 const modal = useModalStore()
-const user: User = JSON.parse(sessionStorage.getItem('userData') ?? '');
-let currentJob: Ref<Job> = ref(new Job());
-const currentShift: Ref<Shift> = ref(new Shift());
+const user:User = useAuthStore().user;
+let currentJob: Ref<Job> = ref({} as Job);
+const currentShift: Ref<Shift> = ref({} as Shift);
 const hasOvertime: Ref<boolean> = ref(false);
 
 function jobUpdated(e: Event) {
     // get job from user job array based on key
     if (user.jobs !== undefined) {
-        currentJob.value = user.jobs.find(j => parseInt((e.target as HTMLInputElement).value) === j.id) ?? new Job()
+        currentJob.value = user.jobs.find(j => parseInt((e.target as HTMLInputElement).value) === j.id) ?? {} as Job
     }
     
     // set shift data to equal job defaults
@@ -129,10 +129,11 @@ async function submit() {
     }
 
     try {
-        const response:AxiosResponse = await api.shift.post(currentShift.value)
+        // const response:AxiosResponse = await api.shift.post(currentShift.value)
+        const response:AxiosResponse = await api.post('shift', currentShift.value)
         if (response) {
             modal.set('Shift added successfully.', 'green')
-            currentShift.value = new Shift() // reset form
+            currentShift.value = {} as Shift // reset form
         }
         else {
             throw new Error('Unknown Error')

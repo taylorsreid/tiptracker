@@ -1,10 +1,10 @@
-export class Job {
-    id: number | undefined
-    title: string | undefined
+export interface Job {
+    id: number
+    title: string
     default_hourly_rate?: number
     default_overtime_rate?: number
-    created_at: string | undefined
-    updated_at: string | undefined
+    created_at: string
+    updated_at: string
 }
 
 export interface User {
@@ -18,13 +18,21 @@ export interface User {
     jobs: [Job]
 }
 
-export class Shift {
-    date: string | undefined
-    job_id: number | undefined
+export interface Shift {
+    date: string
+    job_id: number
     hours_worked_regular?: number
     hours_worked_overtime?: number
     hourly_rate_regular?: number
     hourly_rate_overtime?: number
     tips_cash?: number
     tips_charge?: number
+}
+
+export interface LoginOrRegistrationData {
+        email: string
+        password: string
+        password_confirmation?: string
+        first_name?: string
+        last_name?: string
 }

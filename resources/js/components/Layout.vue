@@ -9,10 +9,10 @@
                 <BNavItemDropdown right>
                     <!-- Using 'button-content' slot -->
                     <template #button-content>
-                        <em>{{ userData?.first_name }} {{ userData?.last_name }}</em>
+                        <em>{{ authStore.user.first_name }} {{ authStore.user.last_name }}</em>
                     </template>
                     <BDropdownItem><RouterLink to="/profile">Profile</RouterLink></BDropdownItem>
-                    <BDropdownItem @click="logout">Logout</BDropdownItem>
+                    <BDropdownItem><RouterLink to="/login" @click="authStore.logout()">Logout</RouterLink></BDropdownItem>
                 </BNavItemDropdown>
             </BNavbarNav>
         </BCollapse>
@@ -24,21 +24,8 @@
 
 <script setup lang="ts">
     import { BNavbar } from 'bootstrap-vue-next';
-    import api from '../api';
-    import router from '../router';
-    import { User } from '../types';
-
-    let stringData:string | null = sessionStorage.getItem('userData')
-    let userData:User;
-    if (stringData !== null) {
-        userData = JSON.parse(stringData)
-    }
-
-    async function logout() {
-        await api.auth.logout()
-        sessionStorage.clear()
-        router.push('/login')
-    }
+    import { useAuthStore } from '../stores';
+    const authStore = useAuthStore()
 </script>
 
 <style>

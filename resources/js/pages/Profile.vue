@@ -6,7 +6,8 @@
 
 <script setup lang="ts">
 import Layout from '../components/Layout.vue';
-import { User } from '../types';
-
-    const user: User = JSON.parse(sessionStorage.getItem('userData') ?? '');
+import { useAuthStore } from '../stores'
+import { storeToRefs } from 'pinia';
+const authStore = useAuthStore()
+const { user } = storeToRefs(authStore) // use storeToRefs to that when updating user info, you only have to submit user.value
 </script>

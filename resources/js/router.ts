@@ -3,7 +3,7 @@ import LoginRegister from './pages/LoginRegister.vue'
 import AddShift from './pages/AddShift.vue'
 import Home from './pages/Home.vue'
 import Profile from './pages/Profile.vue'
-import { useModalStore } from './stores'
+import { useModalStore, useAuthStore } from './stores'
 
 let router:Router = createRouter({
     history: createWebHashHistory(),
@@ -40,7 +40,7 @@ let router:Router = createRouter({
 })
 
 router.beforeEach((to) => {
-    if (!to.meta.isPublic && sessionStorage.getItem('userData') === null) {
+    if (!to.meta.isPublic && !useAuthStore().isLoggedIn) {
         router.push('/login')
     }
     useModalStore().hide() // reset modal on each page navigation
